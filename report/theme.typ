@@ -23,7 +23,7 @@
   show heading: it => {
     if it.level == 1 {
       pagebreak(weak: true)
-      set text(size: 24pt)
+      set text(size: 22pt)
       pad(bottom: 10pt, it)
     } else if it.level == 2 {
       pad(bottom: 8pt, it)
