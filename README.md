@@ -113,6 +113,33 @@ This actually worked! Then, I:
 Then I shut down the machine and took a snapshot.
 </details>
 
+## Installing Metasploitable 2
+
+Download from [Sourceforge](https://sourceforge.net/projects/metasploitable/). Then...
+
+```bash
+# Unzip
+cd Downloads
+unzip metasploitable-linux-2.0.0.zip
+cd Metasploitable2-Linux/
+
+# Convert from VMDK to QCOW2
+qemu-img convert -f vmdk -O qcow2 Metasploitable.vmdk metasploitable2.qcow2
+
+# Move to images directory
+sudo mv metasploitable2.qcow2 /var/lib/libvirt/images/
+```
+
+When creating the VM from the image, it is important to choose "Generic or unknown OS. Usage is not recommended" as the OS type. This will use the IDE instead of VirtIO. Otherwise, the machine haned to...
+
+> Starting up ...
+>
+> Loading, please wait...
+
+There is no need to login, but if you want to, you can use the credentials `msfadmin:msfadmin`. The machine will automatically get an IP address from the DHCP server, so you can check it from virt-manager or by running `ip a` in the terminal (or `netdiscover eth0 -r 192.168.1.0/24 -c 10` to find it from Kali).'
+
+**Memo:** run this `nmap -v -sS -A -T4 -oA <output_file> <ip>`. It is from 07:33 in video course, lesson titled First Scan, but with file output added by me. Outputs All formats (nmap, gnmap, xml).
+
 ## Usage of AI
 
 I used AI only for reformatting purposes. All other work is mine. The most AI-intensive part was the conversion from LaTeX to Typst. Model used was Github Copilot Pro's GPT-5.4. I prefer Typst over LaTeX, and converting the report template manually would have served no purpose (in this course's context). I also used Copilot to e.g. create various scaffolding and template structures, like empty report sections, directory structures, Justfile placeholders, etc.

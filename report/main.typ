@@ -1,4 +1,4 @@
-#set document(title: "Company X Penetration Test", author: ("Jani Sourander",))
+#set document(title: "KYBS2001 Penetration Test", author: ("Jani Sourander",))
 
 #import "@preview/gentle-clues:1.3.0": info
 #import "theme.typ": theme, severity-badge, issue-table
@@ -6,7 +6,7 @@
 
 #align(center)[
   #v(2.5cm)
-  #text(size: 22pt, weight: "bold")[Company X Penetration Test]
+  #text(size: 22pt, weight: "bold")[KYBS2001 Penetration Test]
   #v(-0.25cm)
   #text(size: 12pt)[by Jani Sourander]
   #v(15.6cm)
@@ -25,24 +25,9 @@
 
 #heading(level: 1, numbering: none)[Executive Summary]
 
-#info("
-This is a copy-pasted guide from Moodle Announcements. TODO: remove before submitting the report.
+This report documents a set of University of Jyväskylä KYBS2001 course penetration testing exercises rather than a full commercial engagement against a live organization. The work was performed against the systems and tasks provided for the KYBS2001 course. To be more precise, the targetted system is known as DVWA (Damn Vulnerable Web Application). As a student, I can activate the vulnerable target for up to 12 hours using TIM learning platform. The exercises contains guided tasks and necessary information such as target IP addresses, credentials, and hints.
 
-- primary follow the template suggested (not fully mandatory but the report should be similarly designed in all cases)
-- content and length can vary from student to student
-- no particular length, however, it is expected on average to be between 10 pages and 20 pages long
-- report  should not contain just screenshots, text is a mandatory part, including CVSS scoring (and anything CWE, CVE, CPE related)
-- should capture all the Assignments (1-7) you solved
-"
-)
-
-In this penetration test, Company X was examined for security-relevant weaknesses. The engagement followed a black-box methodology, meaning no internal implementation details were provided in advance. The scope of the assessment was as follows:
-
-- Dedicated web server: 127.0.0.1
-  - Domain: https://example.com
-    - Subdomains: all subdomains
-
-Table @web-sites contains the overview of examined systems during the penetration test.
+Since the target is deliberately vulnerable, it is expected that all exercise will yield positive finding, like _"Yes, the target is vulnerable to XSS"_. Obviously, in an actual commercial engagement, we would not know beforehand if the target is vulnerable to anything, and even worse, we can never be fully sure that we have found all the vulnerabilities. The context is summarized in the @assessment-context below.
 
 #figure(
   table(
@@ -51,24 +36,19 @@ Table @web-sites contains the overview of examined systems during the penetratio
     inset: 7pt,
     fill: (_, y) => if y == 0 { rgb("#d6e0f5") },
     table.header(
-      [*Web Site*], [*Hostname*],
+      [*Item*], [*Summary*],
     ),
-    [Domain 1], [https://example.com/],
-    [Subdomain 1], [https://1.example.com/],
-    [Subdomain 2], [https://2.example.com/],
+    [Assessment type], [University penetration testing exercise],
+    [Scope], [Seven predefined assignments],
+    [Targets], [DVWA hosted by the University],
+    [Method], [Using Kali in virtual machine, following assignment instructions],
   ),
-  caption: [Web sites examined during the penetration test],
-) <web-sites>
+  caption: [Assessment context],
+) <assessment-context>
 
-As a result, several vulnerabilities have been found among the assets of the organization, some of them pose a significant risk. @vulnebility-types summarizes all issues by their type
-across all the assets of Company X. Solutions to remedy the discovered vulnerabilities are provided together with detailed descriptions and reproduction steps
+The last section of the report includes an Extra Activity documenting setting up a mini-lab for penetration testing. This enables continuous learning.
 
-#figure(
-  image("images/vulns-by-type.png", width: 50%),
-  caption: [Vulnerabilities by type],
-) <vulnebility-types>
-
-In this part add a short summary of all vulnerabilities in non-technical terms. It's also good to mention an estimation of efforts required to resolve the issues.
+Table @vuln-overview provides the high-level summary of the exercise findings and links each item to the detailed section where the technical evidence, impact discussion, CVSS scoring, and remediation guidance are presented. (TODO! CVSS scoring etc.)
 
 #figure(
   table(
@@ -78,12 +58,14 @@ In this part add a short summary of all vulnerabilities in non-technical terms. 
     inset: 7pt,
     fill: (_, y) => if y == 0 { rgb("#F3F4F6") },
     table.header(
-      [*Risk*], [*Asset*], [*Vulnerability*], [*Section*],
+      [*Risk*], [*Assignment*], [*Vulnerability*], [*Section*],
     ),
-    [#severity-badge("Critical")], [Assignment 1], [Something here], [@assignment-1],
-    [#severity-badge("High")], [Assignment 2], [Dunno What Goes here], [@assignment-2],
-    [#severity-badge("Medium")], [Assignment 3], [Content needed here too], [@assignment-3],
-    [#severity-badge("Low")], [Assignment 4], [todo], [@assignment-4],
+    [#severity-badge("Critical")], [1], [XSS], [@assignment-1],
+    [#severity-badge("High")], [2], [Command Execution], [@assignment-2],
+    [#severity-badge("Medium")], [3], [File Upload], [@assignment-3],
+    [#severity-badge("Low")], [4], [SQL Injection], [@assignment-4],
+    [#severity-badge("Low")], [5], [Brute-Force Login], [@assignment-5],
+    [#severity-badge("Low")], [6], [NMAP Scan], [@assignment-6],
   ),
   caption: [Vulnerability overview],
 ) <vuln-overview>
@@ -97,9 +79,10 @@ In this part add a short summary of all vulnerabilities in non-technical terms. 
 
 I used the following sources to complete the DVWA XSS assignment:
 
-- Bug Bounty Bootcamp by Vickie Li (No Starch Press, 2021) Chapter 6: Cross-Site Scripting
+- Bug Bounty Bootcamp by Vickie Li (No Starch Press, 2021)
+    - Chapter 6: Cross-Site Scripting
 
-The heading has two abbreviations: XSS (Cross-Site Scripting) and CVSS (Common Vulnerability Scoring System). Vickie Li explain XSS as _"An XSS vulnerability occurs when attackers can execute custom scripts on a victim's browser."_DVWA (Damn Vulnerable Web Application) is a deliberately vulnerable web application used for security training and testing. It can be found at \url{https://github.com/digininja/DVWA}. Based on the repository README, it seems to run a typical LAMP stack (Linux, Apache, MySQL, PHP). The documentation even points to a YouTube video, where a solution is shown: \url{https://youtu.be/V4MATqtdxss?si=EMHoRvfZz_vI-v14}[Finding and exploiting reflected XSS in DVWA].
+The heading has two abbreviations: XSS (Cross-Site Scripting) and CVSS (Common Vulnerability Scoring System). Vickie Li explain XSS as _"An XSS vulnerability occurs when attackers can execute custom scripts on a victim's browser."_ DVWA (Damn Vulnerable Web Application) is a deliberately vulnerable web application used for security training and testing. It can be found at #link("https://github.com/digininja/DVWA"). Based on the repository README, it seems to run a typical LAMP stack (Linux, Apache, MySQL, PHP). The documentation even points to a YouTube video, where a solution is shown: #link("https://youtu.be/V4MATqtdxss?si=EMHoRvfZz_vI-v14")[Finding and exploiting reflected XSS in DVWA].
 
 Obviously, the KYBS2001 hosted exercise might be hardened somehow so that the exercise is not that trivial. This is essentially the scope of this penetration test experiment. Vickie Li lists a couple of common XSS payloads, which are in the table below.
 
@@ -155,7 +138,33 @@ This section will document the NMAP scanning assignment, including the scan scop
 
 = Extra Activity: Mini-LAB for Pentesting <assignment-extra>
 
-This section will document the Mini-LAB for Pentesting extra activity, including the environment summary, key findings, practical steps performed, and relevant lessons learned.
+#info[
+What/how to deliver:
+- code, configs, docs, non-weaponized "test exploit" for demo purposes etc.'
+    - ideally github/gitlab/public-git link
+    - archived zip containing code
+- he code/archive must contain readme.md (in MD format) doc outlining the steps how to run both vulnerable and secured/fixed versions of the lab
+- the mini-lab should be ideally run with easy steps/scripts (e.g., git clone ..., ./setup.sh ... , ./run_vuln.sh && ./exploit_test.sh, ./run_secured.sh && ./exploit_test.sh 
+- these are just high-level suggestions, you can structure the code/steps/scripts as you wish, but aim for readability + modularity + maintainability + extensibility )
+- extra points if you also record+deliver short videos something like up-to 2 minutes (private or public uploads to YouTube or GDrive or FileSender, as you wish) of the lab in all usable situations
+- NOTE: the mini-lab should be self-contained, i.e., contain all the download/setup commands, i.e. should not assume that some software/version already exists in the target environment
+- Target environment could be bare-bone laptop, bare-bone server, but ideally if possible to have the setup/mini-lab working using docker or VM
+
+Tools
+
+- Brutus (https://github.com/praetorian-inc/brutus)
+    - needs to have lab working/demoed with at least "3" different protocols
+- Zen-AI-Pentest (https://github.com/SHAdd0WTAka/Zen-Ai-Pentest)
+    - needs to have lab working/demoed with at least "2" different real-world/dummy/interntionally-vulnerable targets
+- PentestGPT (https://github.com/GreyDGL/PentestGPT)
+    - needs to have lab working/demoed with at least "2" different real-world/dummy/interntionally-vulnerable targets
+- Shannon (https://github.com/KeygraphHQ/shannon)
+    - needs to have lab working/demoed with at least "2" different real-world/dummy/interntionally-vulnerable targets, e.g., two distinct-category vulnerabilities in DVWA
+- ToolX: Any tools from here (https://nothingcyber.medium.com/open-source-ai-pentest-red-team-705730238666)
+    - needs to have lab working/demoed with at least "2" different real-world/dummy/interntionally-vulnerable targets
+
+In all cases, the targets present/setup MUST also be included in the self-contained lab.
+]
 
 = Appendices
 
