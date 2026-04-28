@@ -130,13 +130,13 @@ qemu-img convert -f vmdk -O qcow2 Metasploitable.vmdk metasploitable2.qcow2
 sudo mv metasploitable2.qcow2 /var/lib/libvirt/images/
 ```
 
-When creating the VM from the image, it is important to choose "Generic or unknown OS. Usage is not recommended" as the OS type. This will use the IDE instead of VirtIO. Otherwise, the machine haned to...
+When creating the VM from the image, it is important to choose "Generic or unknown OS. Usage is not recommended" as the OS type. This will use the IDE instead of VirtIO. Otherwise, the machine hanged to...
 
 > Starting up ...
 >
 > Loading, please wait...
 
-There is no need to login, but if you want to, you can use the credentials `msfadmin:msfadmin`. The machine will automatically get an IP address from the DHCP server, so you can check it from virt-manager or by running `ip a` in the terminal (or `netdiscover eth0 -r 192.168.1.0/24 -c 10` to find it from Kali).'
+There is no need to login, but if you want to, you can use the credentials `msfadmin:msfadmin`. The machine will automatically get an IP address from the DHCP server, so you can check it from virt-manager or by running `ip a` in the terminal (or `netdiscover -i eth0 -r 192.168.122.0/24 -c 10` to find it from Kali).'
 
 **Memo:** run this `nmap -v -sS -A -T4 -oA <output_file> <ip>`. It is from 07:33 in video course, lesson titled First Scan, but with file output added by me. Outputs All formats (nmap, gnmap, xml).
 
