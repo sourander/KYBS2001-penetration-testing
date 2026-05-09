@@ -42,6 +42,7 @@ Since the target is deliberately vulnerable, it is expected that all exercise wi
     [Scope], [Seven predefined assignments],
     [Targets], [DVWA hosted by the University],
     [Method], [Using Kali in virtual machine, following assignment instructions],
+    [Allowed methods], [Only methods mentioned in the assignment instructions, except for the extra activity where I set the target machine in a mini-lab and used any method I wanted],
   ),
   caption: [Assessment context],
 ) <assessment-context>
@@ -60,12 +61,13 @@ Table @vuln-overview provides the high-level summary of the exercise findings an
     table.header(
       [*Risk*], [*Assignment*], [*Vulnerability*], [*Section*],
     ),
-    [#severity-badge("Critical")], [1], [XSS], [@assignment-1],
-    [#severity-badge("High")], [2], [Command Execution], [@assignment-2],
-    [#severity-badge("Medium")], [3], [File Upload], [@assignment-3],
-    [#severity-badge("Low")], [4], [SQL Injection], [@assignment-4],
-    [#severity-badge("Low")], [5], [Brute-Force Login], [@assignment-5],
-    [#severity-badge("Low")], [6], [NMAP Scan], [@assignment-6],
+    [#severity-badge("Critical")], [1 XSS], [Poor input validation], [@assignment-1],
+    [#severity-badge("Critical")], [2 Command Execution], [Poor input validation], [@assignment-2],
+    [#severity-badge("Critical")], [3 File Upload], [Possibility to execute arbitrary code], [@assignment-3],
+    [#severity-badge("Critical")], [4 File Inclusion], [Allowing directory traversal], [@assignment-4],
+    [#severity-badge("Critical")], [5 SQL Injection], [Poor input validation], [@assignment-5],
+    [#severity-badge("Critical")], [6 Brute-Force Login], [Weak password policy and no account lockout], [@assignment-6],
+    [#severity-badge("Low")], [7 NMAP Scan], [TODO], [@assignment-7],
   ),
   caption: [Vulnerability overview],
 ) <vuln-overview>
