@@ -67,7 +67,8 @@ Table @vuln-overview provides the high-level summary of the exercise findings an
     [#severity-badge("Critical")], [4 File Inclusion], [Allowing directory traversal], [@assignment-4],
     [#severity-badge("Critical")], [5 SQL Injection], [Poor input validation], [@assignment-5],
     [#severity-badge("Critical")], [6 Brute-Force Login], [Weak password policy and no account lockout], [@assignment-6],
-    [#severity-badge("Low")], [7 NMAP Scan], [TODO], [@assignment-7],
+    [#severity-badge("Critical")], [7 NMAP Scan], [Open SSH port with old OpenSSH version], [@assignment-7],
+    [#severity-badge("Critical")], [7 NMAP Scan], [(Extra) Open, unauthenticated shell access], [@assignment-7],
   ),
   caption: [Vulnerability overview],
 ) <vuln-overview>
