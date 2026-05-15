@@ -1,0 +1,29 @@
+#cloud-config
+# Enable password authentication in sshd_config
+ssh_pwauth: true
+
+# Create the vulnerable user
+users:
+  - name: pentest
+    gecos: Pentest User
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    ssh_pwauth: True
+    shell: /bin/bash
+    lock_passwd: false
+
+# Figuring out this security setting was harder that I expected. The default OpenSSH seems to be surprisingly 
+# sturdy against brute-force attacks out-of-the-box. This setting disables the native IP banning mechanism.
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-vulnerable-lab.conf
+    permissions: '0644'
+    owner: root:root
+    content: |
+      # Disable native IP banning (The Ubuntu 26.04 Boss Fight)
+      PerSourcePenalties no
+
+# Set the weak password
+chpasswd:
+  list: |
+    pentest:password
+  expire: false

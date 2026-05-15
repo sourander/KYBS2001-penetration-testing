@@ -1,0 +1,17 @@
+#cloud-config
+# Update apt and install common pentesting tools
+package_update: true
+packages:
+  - curl
+
+# Create a standard user for yourself on the bastion
+users:
+  - name: pentester
+    gecos: Pentester
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+
+runcmd:
+  - curl -L https://github.com/praetorian-inc/brutus/releases/latest/download/brutus-linux-amd64.tar.gz | tar xz
+  - sudo mv brutus /usr/local/bin/

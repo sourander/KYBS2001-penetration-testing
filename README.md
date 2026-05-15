@@ -14,7 +14,9 @@ typst build report/main.typ
 
 The rendered PDF file will be located at `report/main.pdf`. It is git ignored, so it won't be committed to the repository.
 
-## Running the Brutus Mini-LAB
+## Running the Docker Brutus Mini-LAB
+
+**Note**: A newer Multipass setup is below.
 
 The code for the *ExtraActivity: build mini-lab for AI-pentesting/bruteforcing tools* is in this same repository. It has a brief documentation in the report (see the report guide above), but the code itself is in the `mini-lab` directory. The Brutus documentation is at [Brutus' GitHub repository](https://github.com/praetorian-inc/brutus).
 
@@ -43,6 +45,35 @@ just exploit-secure
 ```
 # Docker goes boom boom
 just teardown
+```
+
+## Running the Multipass Brutus Mini-LAB
+
+This continues the same ExtraActivity as the Docker Brutus Mini-LAB, but it uses Multipass instead of Docker. Reason is to get fail2ban installed easily.
+
+## Prerequisites
+
+- A Linux or macOS host *(Windows requires Hyper-V and thus Windows Pro)*
+- [Multipass](https://canonical.com/multipass/install)
+
+### Get it running
+
+```
+# Create the VMs
+just v2-up
+
+# Brute force poor passwords with Brutus
+just v2-exploit-vulnerable
+
+# TODO: Prove that the secure machine is actually secure.
+just v2-this-command-is-still-to-be-implemented
+```
+
+### Teardown
+
+```
+# Destroy the VMs
+just v2-down
 ```
 
 ## (Off-topic): LAB setup for Kali

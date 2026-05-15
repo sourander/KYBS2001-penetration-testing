@@ -1,0 +1,29 @@
+#cloud-config
+# Enable password authentication in sshd_config
+ssh_pwauth: true
+
+# Install fail2ban
+package_update: true
+packages:
+  - fail2ban
+
+# Create the secure user
+users:
+  - name: ubuntu
+    gecos: Secure Admin User
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    ssh_pwauth: True
+    shell: /bin/bash
+    lock_passwd: false
+
+# Set a strong password
+chpasswd:
+  list: |
+    ubuntu:youwillneverguessthispasswordHAHA
+  expire: false
+
+# Ensure fail2ban is running
+runcmd:
+  - systemctl enable fail2ban
+  - systemctl start fail2ban
