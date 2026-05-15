@@ -16,20 +16,34 @@ The rendered PDF file will be located at `report/main.pdf`. It is git ignored, s
 
 ## Running the Brutus Mini-LAB
 
-The code for the *ExtraActivity: build mini-lab for AI-pentesting/bruteforcing tools* is in this same repository. It has a brief documentation in the report (see the report guide above), but the code itself is in the `mini-lab` directory. It can be set up with Just by following the steps below:
+The code for the *ExtraActivity: build mini-lab for AI-pentesting/bruteforcing tools* is in this same repository. It has a brief documentation in the report (see the report guide above), but the code itself is in the `mini-lab` directory. The Brutus documentation is at [Brutus' GitHub repository](https://github.com/praetorian-inc/brutus).
+
+The LAB can be created and destroyed using Just by following the steps below:
 
 ### Prerequisites
 
-- Docker
-- Just
+- [Docker Enginer](https://docs.docker.com/engine/)
+- [Just](https://github.com/casey/just)
 
 ### Get it running
 
-TODO
+```
+# Launch the Docker Compose stack
+just up
+
+# Brute force poor passwords with Brutus
+just exploit-vulnerable
+
+# Fail at brute forcing good passwords
+just exploit-secure
+```
 
 ### Teardown
 
-TODO
+```
+# Docker goes boom boom
+just teardown
+```
 
 ## (Off-topic): LAB setup for Kali
 
@@ -37,4 +51,4 @@ During the course, I also watched a video on demand course on O'Reilly platform.
 
 ## Usage of AI
 
-I used AI only for reformatting purposes. All other work is mine. The most AI-intensive part was the conversion from LaTeX to Typst. Model used was Github Copilot Pro's GPT-5.4. I prefer Typst over LaTeX, and converting the report template manually would have served no purpose (in this course's context). I also used Github Copilot Pro to e.g. create various scaffolding and template structures, like empty report sections, directory structures, Justfile placeholders, etc.
+I used AI only for reformatting and scaffolding purposes. All other work is mine. The most AI-intensive part was the conversion from LaTeX to Typst. Model used was Github Copilot Pro's GPT-5.4. I prefer Typst over LaTeX, and converting the report template manually would have served no purpose (in this course's context). I also used Github Copilot Pro to e.g. create various scaffolding and template structures, like empty report sections, directory structures, Justfile placeholders, etc.

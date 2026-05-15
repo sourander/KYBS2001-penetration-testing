@@ -1,0 +1,63 @@
+services:
+
+  # SSH x2 -------------------------------------------------
+  ssh-vulnerable:
+    build:
+      context: ./ssh-vulnerable
+    hostname: ssh-vulnerable
+    networks:
+      - lab
+
+  ssh-secure:
+    build:
+      context: ./ssh-secure
+    hostname: ssh-secure
+    networks:
+      - lab
+
+  # Nginx x2 ------------------------------------------------
+  http-vulnerable:
+    build:
+      context: ./http-vulnerable
+    hostname: http-vulnerable
+    networks:
+      - lab
+
+  http-secure:
+    build:
+      context: ./http-secure
+    hostname: http-secure
+    networks:
+      - lab
+
+  # PostgreSQL x2 ----------------------------------------------
+  postgres-vulnerable:
+    image: postgres:16
+    hostname: postgres-vulnerable
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # Hox! wordlists/passwords.txt
+      POSTGRES_DB: postgres
+    networks:
+      - lab
+
+  postgres-secure:
+    image: postgres:16
+    hostname: postgres-secure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "v1BuM@8OgFqGwT@s"
+      POSTGRES_DB: postgres
+    networks:
+      - lab
+
+  # Bastion host. It has Brutus installed.
+  bastion:
+    build:
+      context: ./bastion
+    hostname: brutus-bastion
+    networks:
+      - lab
+
+networks:
+  lab:
