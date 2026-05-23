@@ -1,6 +1,10 @@
 default:
     @just --list
 
+# Build the Typst docs
+docs:
+    typst compile report/main.typ
+
 # Start the lab
 up:
     docker compose -f mini-lab/compose.yml up -d --build
@@ -25,7 +29,6 @@ exploit-secure:
 teardown:
     docker compose -f mini-lab/compose.yml down -v --remove-orphans
 
-# --- MULTIPASS LAB (v2) ---
 # --- MULTIPASS LAB (v2) ---
 
 V2_DIR := "mini-lab-v2"
