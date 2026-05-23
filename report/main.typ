@@ -12,7 +12,7 @@
   #v(15.6cm)
   #text(size: 11pt)[Start of testing: April 25, 2026]
   #linebreak()
-  #text(size: 11pt)[End of testing: #severity-badge("Critical")]
+  #text(size: 11pt)[End of testing: May 23, 2026]
 ]
 
 #pagebreak()
@@ -49,7 +49,7 @@ Since the target is deliberately vulnerable, it is expected that all exercise wi
 
 The last section of the report includes an Extra Activity documenting setting up a mini-lab for penetration testing. This enables continuous learning.
 
-Table @vuln-overview provides the high-level summary of the exercise findings and links each item to the detailed section where the technical evidence, impact discussion, CVSS scoring, and remediation guidance are presented. (TODO! CVSS scoring etc.)
+Table @vuln-overview provides the high-level summary of the exercise findings and links each item to the detailed section where the technical evidence and analysis is provided. Each assignment has it's own section.
 
 #figure(
   table(
@@ -67,8 +67,8 @@ Table @vuln-overview provides the high-level summary of the exercise findings an
     [#severity-badge("Critical")], [4 File Inclusion], [Allowing directory traversal], [@assignment-4],
     [#severity-badge("Critical")], [5 SQL Injection], [Poor input validation], [@assignment-5],
     [#severity-badge("Critical")], [6 Brute-Force Login], [Weak password policy and no account lockout], [@assignment-6],
-    [#severity-badge("Critical")], [7 NMAP Scan], [Open SSH port with old OpenSSH version], [@assignment-7],
-    [#severity-badge("Critical")], [7 NMAP Scan], [(Extra) Open, unauthenticated shell access], [@assignment-7],
+    [#severity-badge("Critical")], [7 NMAP Scan], [Open SSH port with old OpenSSH version and also open, unauthenticated shell access], [@assignment-7],
+    [#severity-badge("Critical")], [Extra Activity], [Weak password on SSH|HTTP|PostgreSQL and no brute-force protection], [@assignment-extra],
   ),
   caption: [Vulnerability overview],
 ) <vuln-overview>
@@ -91,14 +91,3 @@ Table @vuln-overview provides the high-level summary of the exercise findings an
 #include "assignment_07.typ"
 
 #include "extra_minilab.typ"
-
-= Appendices
-
-== Appendix #1 <appendix-1>
-
-Appendix 1.
-
-== Appendix #2 <appendix-2>
-
-Appendix 2.
-
