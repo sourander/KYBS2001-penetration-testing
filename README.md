@@ -14,7 +14,7 @@ typst build report/main.typ
 
 The rendered PDF file will be located at `report/main.pdf`. It is git ignored, so it won't be committed to the repository.
 
-## Running the Docker Brutus Mini-LAB
+## Running the Docker Brutus Mini-LAB (mini-lab)
 
 **Note**: A newer Multipass setup is below.
 
@@ -47,7 +47,7 @@ just exploit-secure
 just teardown
 ```
 
-## Running the Multipass Brutus Mini-LAB
+## Running the Multipass Brutus Mini-LAB (mini-lab-v2)
 
 This continues the same ExtraActivity as the Docker Brutus Mini-LAB, but it uses Multipass instead of Docker. Reason is to get fail2ban installed easily.
 
@@ -65,8 +65,8 @@ just v2-up
 # Brute force poor passwords with Brutus
 just v2-exploit-vulnerable
 
-# TODO: Prove that the secure machine is actually secure.
-just v2-this-command-is-still-to-be-implemented
+# Out of scope
+# just v2-exploit-secure
 ```
 
 ### Teardown
